@@ -23,3 +23,29 @@ $('#selectImage').on('change', function () {
   }
 
 });
+
+// $('#image-cropper').cropit();
+// $imageCropper.cropit();
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('#image-cropper').cropit();
+    $('#image-cropper2').cropit();
+
+});
+
+// $('#image-cropper').cropit(
+//     {
+//         onImageLoaded: function() {
+//             alert('loaded');
+//             var data = $("#image-cropper").cropit('imageSrc');
+//             console.log(data);
+//         }
+//     }
+// );
+
+// $("#image-cropper2").cropit('imageSrc',$("#image-cropper").cropit('imageSrc'));
+
+$('.download-btn').click(function() {
+  var imageData = $('#image-cropper').cropit('export');
+  window.open(imageData);
+});

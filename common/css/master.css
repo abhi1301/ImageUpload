@@ -16,3 +16,21 @@ h4{
   font-weight: bolder;
   color: darkcyan;
 }
+
+.cropit-preview {
+  /* You can specify preview size in CSS */
+  width: 500px;
+  height: 400px;
+}
+
+.cropit-image-zoom-input{
+  width: 35%
+}
+input[type=range] {
+    /*display: block;*/
+     width: 35%;
+}
+
+#image-cropper, #image-cropper2 {
+    text-align: -webkit-center;
+}
