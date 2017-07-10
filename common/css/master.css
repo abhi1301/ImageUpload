@@ -17,20 +17,47 @@ h4{
   color: darkcyan;
 }
 
-.cropit-preview {
-  /* You can specify preview size in CSS */
-  width: 500px;
-  height: 400px;
+/*horizontal : 755 x 450
+vertical : 365 x 450
+horizontal small : 365 x 212
+gallery : 380 x 380*/
+
+#image-cropper > .cropit-preview {
+  /* Horizontal */
+  width: 755px;
+  height: 450px;
+}
+
+#image-cropper2 > .cropit-preview {
+  /* vertical */
+  width: 365px;
+  height: 450px;
+
+}#image-cropper3 > .cropit-preview {
+  /* horizontal small */
+  width: 365px;
+  height: 212px;
+
+}#image-cropper4 > .cropit-preview {
+  /* gallery */
+  width: 380px;
+  height: 380px;
 }
 
 .cropit-image-zoom-input{
   width: 35%
 }
-input[type=range] {
-    /*display: block;*/
-     width: 35%;
+
+input.cropit-image-input{
+  visibility: hidden;
 }
 
-#image-cropper, #image-cropper2 {
+input[type=range] {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 35%;
+}
+
+#image-cropper, #image-cropper2, #image-cropper3, #image-cropper4 {
     text-align: -webkit-center;
 }
