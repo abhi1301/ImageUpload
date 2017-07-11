@@ -61,3 +61,20 @@ input[type=range] {
 #image-cropper, #image-cropper2, #image-cropper3, #image-cropper4 {
     text-align: -webkit-center;
 }
+
+.renderHere {
+    text-align: center;
+}
+
+.renderHere > div {
+  margin-bottom: 40px;
+  border-bottom-style: solid;
+  border-bottom-color: peru;
+}
+
+button {
+    border: solid darkgrey;
+    border-width: 2px;
+    background: lavender;
+    border-radius: 400px;
+}

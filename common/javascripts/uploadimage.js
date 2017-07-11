@@ -1,37 +1,32 @@
-$('#selectImage').on('change', function () {
-
-  var image = $(this).get(0).files;
-
-  if (image.length > 0) {
-    var imageData = new FormData();
-    var file = image[0];
-    imageData.append('uploadImage',file, file.name);
-
-    $.ajax({
-      url: '/uploaded',
-      type: 'POST',
-      data: imageData,
-      contentType: false,
-      processData: false,
-      success: function (data) {
-        console.log('uploaded successfully..');
-      },
-      error: function (e) {
-         alert('error ' + e.message);
-       }
-    });
-  }
-
-});
-$('#uploadFile').on('click', function () {
+function reset() {
   $('.hideCroping').hide();
+  $('.hideRendering').hide();
+  $('.hideRetry').hide();
+  $('.sizeWarn').hide();
+  $('.hideUploadingMsg').hide();
+  $( "#cropAll" ).prop( "disabled", false );
+}
+reset();
+
+function renderImages(url) {
+  $('.hideCroping').hide();
+  $('.hideRendering').show();
+
+  var htmlRender = '<div class="col-md-12 col-sm-12 col-xs-12">     <img src="'+ url[1] +'" alt="Cropped Image" />       <a href="'+ url[1] +'"><h5>'+ url[1] +'</h5></a>   </div>  <div class="col-md-12 col-sm-12 col-xs-12">    <img src="'+ url[2] +'" alt="Cropped Image" />      <a href="'+ url[2] +'"><h5>'+ url[2] +'</h5></a>  </div>  <div class="col-md-12 col-sm-12 col-xs-12">    <img src="'+ url[3] +'" alt="Cropped Image" />      <a href="'+ url[3] +'"><h5>'+ url[3] +'</h5></a>  </div>  <div class="col-md-12 col-sm-12 col-xs-12">    <img src="'+ url[4] +'" alt="Cropped Image" />      <a href="'+ url[4] +'"><h5>'+ url[4] +'</h5></a>  </div>';
+  $('div.renderHere').html(htmlRender);
+}
+
+$('#uploadFile').on('click', function () {
+  // $('.hideCroping').hide();
+  // $('.hideRendering').hide();
+  reset();
   $('#image1Load').click();
 });
-$('.hideCroping').hide();
+
 // $('#image-cropper').cropit();
 // $imageCropper.cropit();
 $( document ).ready(function() {
-    console.log( "ready!" );
+    // console.log( "ready!" );
     $('#image-cropper').cropit();
     $('#image-cropper2').cropit();
     $('#image-cropper3').cropit();
@@ -43,11 +38,9 @@ $('#image-cropper').cropit(
     {
         onImageLoaded: function() {
             var size = $('#image-cropper').cropit('imageSize');
-            console.log(true && true);
-            console.log((size.width >= 1024) && (size.height >= 1024));
-            console.log(size.height >= 1024);
-            if ((size.width >= 1024) && (size.height >= 1024) ){
-              console.log("yoyo");
+            if ((size.width == 1024) && (size.height == 1024) ){
+
+              $('.sizeWarn').hide();
               $('.hideCroping').show();
               var data = $("#image-cropper").cropit('imageSrc');
               $("#image-cropper2").cropit('imageSrc', data);
@@ -56,43 +49,23 @@ $('#image-cropper').cropit(
             }
             else {
               console.log("size not suitable");
+              $('.sizeWarn').show();
             }
 
         }
     }
 );
 
-// $("#image-cropper2").cropit('imageSrc',$("#image-cropper").cropit('imageSrc'));
 
 $('#cropAll').click(function() {
-  // var imageData = $('#image-cropper').cropit('export');
-  // window.open(imageData);
-  // var imageData = $('#image-cropper').cropit('export');
-//   window.open($('#image-cropper').cropit('export', { type: 'image/jpeg',  originalSize: true }));
-//   window.open($('#image-cropper2').cropit('export', {
-//   type: 'image/jpeg',
-//   originalSize: true
-// }));
-//   window.open($('#image-cropper3').cropit('export', {
-//   type: 'image/jpeg',
-//   originalSize: true
-// }));
-//   window.open($('#image-cropper4').cropit('export'), {
-//   type: 'image/jpeg',
-//   originalSize: true
-// });
+  $( "#cropAll" ).prop( "disabled", true );
+  $('.hideUploadingMsg').show();
+  $('.hideRetry').hide();
   var images = {};
   images.a = $('#image-cropper').cropit('export', { type: 'image/jpeg',  originalSize: false });
   images.b = $('#image-cropper2').cropit('export', { type: 'image/jpeg',  originalSize: false });
   images.c = $('#image-cropper3').cropit('export', { type: 'image/jpeg',  originalSize: false });
   images.d = $('#image-cropper4').cropit('export', { type: 'image/jpeg',  originalSize: false });
-
-  // console.log(images);
-  // var jstring = new Object();
-  // jstring.name = 'abhishek';
-  // jstring.pass = 'abhi1301';
-  // console.log(jstring);
-  // console.log(JSON.stringify(jstring));
 
   $.ajax({
     url: '/uploaded',
@@ -102,10 +75,20 @@ $('#cropAll').click(function() {
     contentType: 'application/json',
     processData: false,
     success: function (data) {
-      console.log('uploaded successfully..');
+      if(data.status == 200){
+        renderImages(data.url);
+        console.log('Upload sucess!!');
+      }
+      else {
+        console.log('Upload Failed. Retry!');
+        $('.hideRetry').show();
+        $('.hideUploadingMsg').hide();
+        $( "#cropAll" ).prop( "disabled", false );
+      }
     },
     error: function (e) {
        console.log(e.message);
+
      }
   });
 });

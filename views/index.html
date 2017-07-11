@@ -24,14 +24,16 @@
 
               <!-- <input type="file" name="uploadImage" id="selectImage" hidden /> -->
               <button type="button" id="uploadFile">Select Image</button>
+              <h5 class="sizeWarn">Image should be of exactly <b>1024x1024</b> dimension only. Select again!</h5>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Cropping section -->
     <div class="container hideCroping">
-      <!-- Cropping section -->
-      <!-- Image 1 -->
+      <!-- Image 1  -->
       <div class="row">
         <div class="col-md-12">
           <div class="panel panel-default">
@@ -108,6 +110,28 @@
                 After setting, positioning and zooming all 4 images, click the bellow button to crop all and upload to server.
               </p>
               <button type="button" id="cropAll">Crop All</button>
+              <h6 class="hideUploadingMsg">Uploading Files...</h6>
+              <h6 class="hideRetry">Upload Failed. Click again to Retry</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Rendering Section : Initially hidden -->
+    <div class="container hideRendering">
+      <!-- Image 1  -->
+      <div class="row">
+        <div class="col-md-12">
+          <h4>The images have been uploaded successfully</h4><br>
+          <h6>Following are the images from the cloud server with their links. <br>To upload new image click "Select Image" button again.</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-body renderHere">
+
             </div>
           </div>
         </div>

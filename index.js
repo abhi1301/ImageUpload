@@ -27,44 +27,41 @@ cloudinary.config({
 app.post('/uploaded', function ( request, response) {
 
   urls = new Object();
-  // urls.a = 'a';
-  // urls.b = 'b';
-  // urls.c = 'c';
-  // console.log(urls);
+
   var linkCount = 0;
   var errorCount = 0;
   for (i in request.body){
-    // console.log("i "+ i);
-    // urls.i =" i";
-    // console.log(request.body[i]);
+
     cloudinary.uploader.upload(request.body[i], function(result) {
+      // console.log(result);
+      
     if (result.url){
-      console.log("link : "+result.url);
-      urls.i = result.url;
+      console.log("link added: "+i);
       linkCount += 1;
+      urls[linkCount] = result.url;
     }
     else {
-      console.log("error");
+
       errorCount += 1;
       // response.send(result);
     }
+    if ((errorCount+linkCount) == 4) {
+      if (errorCount) {
+          // console.log("error occured");
+          response.send('{"status" : 205}');
+        }
+        else{
+          // console.log("success");
+          // console.log(urls);
+          var result = JSON.stringify({
+            status: 200,
+            url: urls
+          });
+          response.send(result);
+        }
+    }
     });
   }
-  // while (true) {
-  //   if (errorCount > 0) {
-  //     console.log("error occured");
-  //     response.send('{"failure" : "Update failed", "status" : 205}');
-  //     break;
-  //   }
-  //   else if (linkCount == 4) {
-  //     console.log("success");
-  //     console.log(urls);
-  //     response.send('{"success" : "Updated Successfully", "status" : 200}');
-  //     break;
-  //   }
-  // }
-  // console.log(urls);
-  response.send('{"success" : "Updated Successfully", "status" : 200}');
 
 });
 
